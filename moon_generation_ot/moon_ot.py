@@ -227,6 +227,9 @@ if __name__ == '__main__':
     parser.add_argument("--maria-density-mult", type=float, default=1.0,
                          help="fattore sulla densita' complessiva di crateri nei mari, indipendente dalla taglia "
                               "(1.0 = nessun effetto, 0.5 = meta' crateri rispetto agli altopiani, in piena zona mare)")
+    parser.add_argument("--base-amp-frac", type=float, default=0.02,
+                         help="ampiezza del rumore/rilievo fractal di base (il terreno 'grezzo' prima di crateri e mari), "
+                              "come frazione di --grid. Default 0.02; dimezzalo (0.01) per un terreno di base piu' piatto/liscio")
     parser.add_argument("--out", type=str, default="luna_ot.png")
     parser.add_argument("--verbose", action="store_true")
     args = parser.parse_args()
@@ -243,6 +246,7 @@ if __name__ == '__main__':
                                         maria_edge_width_frac=args.maria_edge_width,
                                         maria_crater_suppression=args.maria_crater_suppression,
                                         maria_density_mult=args.maria_density_mult,
+                                        base_amp_frac=args.base_amp_frac,
                                         verbose=args.verbose)
     print(f"generata in {time.time()-t0:.0f}s")
     Image.fromarray((np.clip(img, 0, 1) * 255).astype(np.uint8)).save(args.out)
